@@ -2,13 +2,18 @@ import sbt._
 
 object Versions {
   val catsEffectVersion = "2.0.0"
-  val specs2Version = "4.8.1"
+  val scalatestVersion = "3.0.8"
+  val jnaVersion = "5.4.0"
 }
 
+// noinspection TypeAnnotation
 object Dependencies {
   import Versions._
 
-  // noinspection TypeAnnotation
   val catsEffect = "org.typelevel" %% "cats-effect" % catsEffectVersion
-  val specs2 = "org.specs2" %% "specs2-core" % specs2Version % Test
+  val scalaTest = Seq(
+    "org.scalactic" %% "scalactic" % scalatestVersion,
+    "org.scalatest" %% "scalatest" % scalatestVersion % Test
+  )
+  val javaJna = "net.java.dev.jna" % "jna" % jnaVersion
 }
