@@ -10,7 +10,7 @@ lazy val commonSettings = Seq(
   organization := "io.github.pmukhin",
   scalaVersion := "2.13.0",
   crossScalaVersions := Seq(scalaVersion.value, "2.12.8"),
-  libraryDependencies ++= Seq(specs2)
+  libraryDependencies ++= scalaTest
 )
 
 lazy val root = project
@@ -22,7 +22,10 @@ lazy val root = project
 lazy val core = project
   .settings(commonSettings)
   .in(file("core"))
-  .settings(name := "dotenv4s-core")
+  .settings(
+    name := "dotenv4s-core",
+    libraryDependencies += javaJna
+  )
 
 lazy val examples = project
   .settings(commonSettings)
@@ -48,7 +51,7 @@ lazy val releaseSettings = {
         "git@github.com:pmukhin/dotenv4s.git"
       )
     ),
-    homepage := None(url("https://github.com/pmukhin/dotenv4s")),
+    homepage := Some(url("https://github.com/pmukhin/dotenv4s")),
     licenses := Seq(
       "Apache-2.0" -> url("https://www.apache.org/licenses/LICENSE-2.0.html")
     ),
