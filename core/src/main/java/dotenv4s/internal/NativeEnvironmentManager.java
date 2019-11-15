@@ -6,13 +6,6 @@ import com.sun.jna.Library;
 import com.sun.jna.Native;
 import com.sun.jna.Platform;
 
-/**
- * Change the actual program environment so that changes propagate to child processes
- * <p>
- * Taken from: http://stackoverflow.com/questions/318239/how-do-i-set-environment-variables-from-java/7201825#7201825
- * <p>
- * Created by mfellows on 20/07/2014.
- */
 public abstract class NativeEnvironmentManager {
     public abstract void setEnv(String key, String value);
 
@@ -25,8 +18,7 @@ public abstract class NativeEnvironmentManager {
     static class WindowsNativeEnvironmentManagerImpl extends NativeEnvironmentManager {
         public interface WindowsEnvironmentLibC extends Library {
             WindowsEnvironmentLibC INSTANCE = (
-                    (WindowsEnvironmentLibC) Native.loadLibrary("msvcrt",
-                            WindowsEnvironmentLibC.class)
+                    Native.load("msvcrt", WindowsEnvironmentLibC.class)
             );
 
             int _putenv(String name);
@@ -48,8 +40,7 @@ public abstract class NativeEnvironmentManager {
     static class PosixNativeEnvironmentManagerImpl extends NativeEnvironmentManager {
         public interface PosixEnvironmentLibC extends Library {
             PosixEnvironmentLibC INSTANCE = (
-                    (PosixEnvironmentLibC) Native.loadLibrary("c",
-                            PosixEnvironmentLibC.class)
+                    Native.load("c", PosixEnvironmentLibC.class)
             );
 
             int setenv(String name, String value, int overwrite);
