@@ -9,7 +9,10 @@ private[dotenv4s] object Loader {
     val filePath = Paths.get(path.getFileName + "/" + filename)
     val contents = Files.readAllLines(filePath).toArray.mkString("\n")
     val env = Parser.parse(contents)
-    val mapAsJava = env.asJava
+    val sysEnv = System.getenv.asScala
+    val clearedEnv = env.filter { case (key, _) => sysEnv.get(key).isDefined }
+    val mapAsJava = clearedEnv.asJava
+
     NativeEnvironmentManager.setEnv(mapAsJava)
     DirtyEnvHack.setEnv(mapAsJava)
   }

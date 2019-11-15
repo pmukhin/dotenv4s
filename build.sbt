@@ -20,7 +20,7 @@ lazy val root = project
   .settings(commonSettings,  releaseSettings)
 
 lazy val core = project
-  .settings(commonSettings)
+  .settings(commonSettings,releaseSettings)
   .in(file("core"))
   .settings(
     name := "dotenv4s-core",
@@ -28,13 +28,13 @@ lazy val core = project
   )
 
 lazy val examples = project
-  .settings(commonSettings)
+  .settings(commonSettings, noPublishSettings)
   .in(file("examples"))
   .settings(name := "dotenv4s-examples")
   .dependsOn(core)
 
 lazy val `cats-effect` = project
-  .settings(commonSettings)
+  .settings(commonSettings, releaseSettings)
   .in(file("cats-effect"))
   .dependsOn(core)
   .settings(
